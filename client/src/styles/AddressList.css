@@ -1,0 +1,29 @@
+p {
+    font-size: x-large;
+    background-color: lightgray;
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+.card1 {
+    float: left;
+    width: 42%;
+    padding-top: 50px;
+    padding-left: 20px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+tfoot {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+td {
+    border: 1px solid #3e3e3e;
+    text-align: left;
+    padding: 0.5em;
+}

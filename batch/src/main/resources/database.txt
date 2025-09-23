@@ -1,0 +1,49 @@
+\c postgres;
+DROP DATABASE cluster_btc;
+CREATE DATABASE cluster_btc;
+\c cluster_btc;
+
+CREATE TABLE ADDRESS (
+	ADDRESS_ID BIGSERIAL PRIMARY KEY,
+	ADDRESS_HASH VARCHAR(255) UNIQUE NOT NULL,
+	MINER_ADDRESS BOOLEAN NOT NULL,
+	ADDRESS_TYPE SMALLINT,
+	CLUSTER_ID BIGINT
+);
+
+CREATE TABLE SUB_CLUSTER (
+	ADDRESS_ID_1 BIGINT REFERENCES ADDRESS(ADDRESS_ID),
+	ADDRESS_ID_2 BIGINT REFERENCES ADDRESS(ADDRESS_ID),
+	CLUSTER_ID BIGINT NOT NULL,
+	LINK_TYPE SMALLINT NOT NULL,
+	LINK_VISIBLE_SIZE INT DEFAULT 0,
+	PRIMARY KEY(ADDRESS_ID_1,ADDRESS_ID_2)
+);
+
+// Query
+select count(*) from address;
+select * from address where address_hash like 'bc%';
+select cluster_id, count(*) from sub_cluster group by cluster_id having count(*) >= 10000;
+select cluster_id, count(*) from address group by cluster_id having count(*) >= 1000;
+select pg_size_pretty (pg_database_size ('cluster_btc'));
+
+// Numero totale di cluster
+select count(*) from (select cluster_id, count(*) from address group by cluster_id) as foo;
+// Numero totale di cluster con solo miners
+select count(*) from (
+    select cluster_id, count(*)
+    from (select * from address where miner_address = true) as foo1
+    group by cluster_id) as foo;
+select * from address where miner_address = true;
+
+// Numero di cluster che hanno un certo numero di address
+select addresses, count(*) as num_cluster from
+(select cluster_id, count(*) as addresses from address group by cluster_id) as foo
+group by addresses order by addresses;
+
+// Esporta in un file CSV
+\copy (select addresses, count(*) as num_cluster from (select cluster_id, count(*) as addresses from address group by cluster_id) as foo group by addresses order by addresses) to 'C:\Users\matte\file.csv' (FORMAT csv);
+
+// Indexes
+create index hash_index on address(address_hash);
+create index subcluster_index on sub_cluster(address_id_1,address_id_2);

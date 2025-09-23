@@ -1,0 +1,58 @@
+#legend {
+    padding-top: 70px;
+    padding-left: 20px;
+    font-size: medium;
+    background-color: white;
+}
+
+#main {
+    font-size: x-large;
+    background-color: lightgray;
+    padding: 0.5em;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+#card1-info {
+    padding-top: 50px;
+    padding-left: 20px;
+    display: flex;
+    width: auto;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+table.table-bordered > thead > tr > th{
+    border:1px solid black;
+}
+table.table-bordered > tbody > tr > td{
+    border:1px solid black;
+}
+
+tfoot {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.address-col {
+    text-align: left;
+    padding: 0.5em;
+    width: 400px;
+}
+
+td {
+    text-align: left;
+    padding: 0.5em;
+}
+
+thead {
+    font-family: "Arial Rounded MT Bold", serif;
+    font-size: 20px;
+    min-width: fit-content;
+    text-align: left;
+    padding: 0.5em;
+    background-color: #bdffa0;
+}

@@ -1,0 +1,10 @@
+/* Clear floats after the columns */
+.main-container::after {
+    content: "";
+    display: flex;
+    clear: both;
+}
+
+.main-container {
+    box-sizing: border-box;
+}
